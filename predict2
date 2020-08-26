@@ -30,7 +30,7 @@ import json
 parser = argparse.ArgumentParser(description='flowers')
 
 parser.add_argument('--image_path', type=str, help='path of image')
-parser.add_argument('--save_dir', type=str, help='Directory to save checkpoints')
+parser.add_argument('--save_dir', type=str, default='checkpoint.pth', help='Directory to save checkpoints')
 parser.add_argument('--json', type=str, default='cat_to_name.json', help='Path to classes map file')
 parser.add_argument('--topk', type=int, default=5, help='Number of highest probabilities')
 parser.add_argument('--gpu', type=bool, default=False, help='Use GPU or not')
@@ -86,6 +86,8 @@ def load_checkpoint(args):
     
     model.class_to_idx = checkpoint['class_to_idx']
     idx_to_class = {v : k for k, v in model.class_to_idx.items()}
+    
+    return class_to_idx, idx_to_class
 
 def process_image(image_path):
    
