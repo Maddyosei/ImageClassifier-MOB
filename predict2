@@ -62,7 +62,7 @@ def load_checkpoint(args):
     for param in model.parameters():
         param.requires_grad = False
         
-    return model
+    
     
     model = load_checkpoint(args.save_dir)
     
@@ -87,7 +87,7 @@ def load_checkpoint(args):
     model.class_to_idx = checkpoint['class_to_idx']
     idx_to_class = {v : k for k, v in model.class_to_idx.items()}
     
-    return class_to_idx, idx_to_class
+    return model, model.class_to_idx, idx_to_class
 
 def process_image(image_path):
    
@@ -144,5 +144,5 @@ def predict(args, image_path, model, class_to_idx, idx_to_class, cat_to_name, to
 with open('cat_to_name.json', 'r') as f:
     cat_to_name = json.load(f)   
     
-model, class_to_idx, idx_to_class = load_checkpoint(args)
-probs, classes = predict(args, args.image_path, model, class_to_idx, idx_to_class, cat_to_name, topk=args.topk)
+model, model.class_to_idx, idx_to_class = load_checkpoint(args)
+probs, classes = predict(args, args.image_path, model, model.class_to_idx, idx_to_class, cat_to_name, topk=args.topk)
