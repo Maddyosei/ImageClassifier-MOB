@@ -29,13 +29,13 @@ import json
 
 parser = argparse.ArgumentParser(description='flowers')
 
-parser.add_argument('--image_path', type=str, help='path of image')
+parser.add_argument('--image_path', type=str, default = 'flowers/test/1/image_06752.jpg', help='path of image')
 parser.add_argument('--save_dir', type=str, default='checkpoint.pth', help='Directory to save checkpoints')
 parser.add_argument('--json', type=str, default='cat_to_name.json', help='Path to classes map file')
 parser.add_argument('--topk', type=int, default=5, help='Number of highest probabilities')
 parser.add_argument('--gpu', type=bool, default=False, help='Use GPU or not')
 parser.add_argument('--lr', type=float, default=0.001, help='learning rate')
-parser.add_argument('--hidden units', type=int, default=500, help='hidden units for fc layer') 
+parser.add_argument('--hidden_units', type=int, default=500, help='hidden units for fc layer') 
 
 args = parser.parse_args()
 
@@ -61,14 +61,7 @@ def load_checkpoint(args):
     
     for param in model.parameters():
         param.requires_grad = False
-        
-    
-    
-    model = load_checkpoint(args.save_dir)
-    
-    for param in model.parameters():
-        param.requires_grad = False
-    
+       
     classifier = nn.Sequential(OrderedDict([
         ('fc1', nn.Linear(1024, args.hidden_units)),
         ('relu1', nn.ReLU()),
